@@ -1,7 +1,6 @@
 #!/bin/bash
 
 export CORES=2
-export OUTPUT=/work/output/$FUZZER/$CORPUS-$TSTAMP/
 export WHATSUP=/afl/afl-whatsup
 export AFL_NO_AFFINITY=1
 

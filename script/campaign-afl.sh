@@ -12,8 +12,11 @@ CMD='@@'
 AFL_ARGS='-t 500 -m 2048'
 PROGRAM="$READELF $ARGS"
 
-mkdir -p $OUTPUT
-rm -rf $OUTPUT/*
+if [ -z "$OUTPUT" ]; then
+  echo No OUTPUT specified
+  exit 1
+fi
+mkdir -p "$OUTPUT"
 
 echo "Launching leader"
 $AFL $AFL_ARGS -M afl-leader -i $INPUT -o $OUTPUT -- $PROGRAM $CMD &>/dev/null &

@@ -27,3 +27,9 @@ RUN cd /git-repos &&\
   git clone https://github.com/mrash/afl-cov.git &&\
   cd /usr/local/bin &&\
   ln -s /git-repos/afl-cov/afl-cov
+
+# make binutils has errors, but it builds enough for readelf
+RUN mkdir /binutils-gcov &&\
+  cd /binutils-gcov &&\
+  LIBS=-lgcov CFLAGS='-fprofile-arcs -ftest-coverage' CC=gcc CXX=g++ /git-repos/binutils-gdb/configure &&\
+  make -i -j 4

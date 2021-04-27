@@ -11,11 +11,9 @@ if [[ -z "$CORPUS" ]]; then
   exit 2
 fi
 
-$INPUT=$CORPUS_REPO/$CORPUS
-export $OUTPUT=/work/output/$FUZZER/$CORPUS-$TSTAMP
-docker run --cpus 9 --rm -w /work -it -v "$RUN_DIR/..":/work -v "$INPUT":/corpus my/afl sh -c "OUTPUT=$OUTPUT /work/script/campaign-afl.sh"
+INPUT=$CORPUS_REPO/$CORPUS
+export OUTPUT=/work/output/$FUZZER/$CORPUS-$TSTAMP
 
-rm $TMP/*
-rmdir $TMP
+docker run --rm -w /work -it -v "$RUN_DIR/..":/work -v "$INPUT":/corpus my/afl sh -c "OUTPUT=$OUTPUT /work/script/campaign-afl.sh"
 
 $RUN_DIR/run-collect.sh

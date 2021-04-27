@@ -12,23 +12,9 @@ if [[ -z "$CORPUS" ]]; then
   exit 2
 fi
 
-TMP=$RUN_DIR/../tmp-$TSTAMP
-mkdir -p $TMP
-rm -rf $TMP/*
-cp -r $CORPUS_REPO/$CORPUS/* $TMP/
-if [ $? -ne 0 ]; then
-  echo Invalid CORPUS
-  exit 3
-fi
-if [ $CORPUS == 'engineered' ]; then
-  rm $TMP/ia64-unwind
-  rm $TMP/mach-flags.a
-  rm $TMP/nds32-attributes
-fi
+INPUT=$CORPUS_REPO/$CORPUS
+export OUTPUT=/work/output/$FUZZER/$CORPUS-$TSTAMP
 
-docker run --cpus 9 --rm -w /work -it -v "$RUN_DIR/..":/work -v "$TMP":/corpus my/mopt sh -c "FUZZER=$FUZZER CORPUS=$CORPUS USE_ASAN=1 TSTAMP=$TSTAMP /work/script/campaign-mopt.sh"
+docker run --cpus 9 --rm -w /work -it -v "$RUN_DIR/..":/work -v "$INPUT":/corpus my/mopt sh -c "OUTPUT=$OUTPUT /work/script/campaign-mopt.sh"
 
-rm $TMP/*
-rmdir $TMP
-
-FUZZER=$FUZZER CORPUS=$CORPUS TSTAMP=$TSTAMP $RUN_DIR/collect-asan.sh
+$RUN_DIR/collect-asan.sh

@@ -6,4 +6,4 @@ if [ -z $OUTPUT ]; then
   exit 1
 fi
 
-docker run --rm -it -w /work "$RUN_DIR"/..:/work my/afl -c "OUTPUT=$OUTPUT /work/script/collect.sh"
+docker run --rm -it -w /work -v "$RUN_DIR"/..:/work my/afl sh -c "OUTPUT=$OUTPUT /work/script/collect.sh"

@@ -2,8 +2,12 @@
 
 # Runs afl-cov on a campaign
 
+TMP=/tmp/$OUTPUT
+mkdir -p $TMP
+cp -r /binutils-gcov/binutils/* $TMP/
 ARGS="-atcw -x 1 -p 1 -R 1"
-READELF=/work/bin/readelf-2.36-gcov
-COV_CMD="${READELF}-gcov"
+READELF=$TMP/readelf
 
-afl-cov -d $OUTPUT --coverage-cmd "$READELF $ARGS AFL_FILE" --code-dir /git-repos/binutils-gdb/binutils
+echo Running afl-cov...
+afl-cov -d $OUTPUT --coverage-cmd "$READELF $ARGS AFL_FILE" -O --code-dir /binutils-gcov/binutils --enable-branch-coverage --coverage-at-exit 
+
