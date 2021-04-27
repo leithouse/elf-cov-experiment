@@ -1,7 +1,6 @@
 #!/bin/bash
 
 export CORES=8
-export OUTPUT=/work/output/$FUZZER/$CORPUS-$TSTAMP
 export WHATSUP=afl-whatsup
 export AFL_NO_AFFINITY=1
 
@@ -13,8 +12,11 @@ CMD='@@'
 AFL_ARGS="-L 0"
 PROGRAM="$READELF $ARGS"
 
+if [ -z "$OUTPUT" ]; then
+    echo No OUTPUT specified
+      exit 1
+fi
 mkdir -p $OUTPUT
-rm -rf $OUTPUT/*
 
 echo "Launching master"
 $AFL $AFL_ARGS -M afl-leader -i $INPUT -o $OUTPUT -- $PROGRAM $CMD &>/dev/null &

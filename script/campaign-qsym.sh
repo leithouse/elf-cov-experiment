@@ -15,7 +15,6 @@ QSYM=/workdir/qsym/bin/run_qsym_afl.py
 CMD="@@"
 
 mkdir -p $OUTPUT
-rm -rf $OUTPUT/*
 echo "Launching leader AFL"
 $AFL -t 1000+ -m none -M afl-leader -i $INPUT -o $OUTPUT -- $PROG $CMD &>/dev/null &
 echo Waiting for fuzzing stats

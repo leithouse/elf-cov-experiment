@@ -14,6 +14,6 @@ fi
 INPUT=$CORPUS_REPO/$CORPUS
 export OUTPUT=/work/output/$FUZZER/$CORPUS-$TSTAMP
 
-docker run --rm -w /work --cpus 2 -it -v "$RUN_DIR/..":/work -v "$INPUT":/corpus my/qsym sh -c "OUTPUT=$OUTPUT /work/script/campaign-qsym.sh"
+docker run --rm -w /work --cpus 2 -it -v "$RUN_DIR/..":/work -v "$INPUT":/corpus --privileged my/qsym sh -c "OUTPUT=$OUTPUT /work/script/campaign-qsym.sh"
 
 $RUN_DIR/run-collect.sh

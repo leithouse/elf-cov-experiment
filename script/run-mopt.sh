@@ -15,6 +15,6 @@ fi
 INPUT=$CORPUS_REPO/$CORPUS
 export OUTPUT=/work/output/$FUZZER/$CORPUS-$TSTAMP
 
-docker run --cpus 9 --rm -w /work -it -v "$RUN_DIR/..":/work -v "$INPUT":/corpus my/mopt sh -c "OUTPUT=$OUTPUT /work/script/campaign-mopt.sh"
+docker run --rm -w /work -it -v "$RUN_DIR/..":/work -v "$INPUT":/corpus my/mopt sh -c "OUTPUT=$OUTPUT /work/script/campaign-mopt.sh"
 
-$RUN_DIR/collect-asan.sh
+$RUN_DIR/run-collect.sh
