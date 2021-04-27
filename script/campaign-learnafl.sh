@@ -2,7 +2,7 @@
 cd /LearnAFL
 
 export CORES=1
-export WHATSUP=/afl/afl-whatsup
+export WHATSUP=./afl-whatsup
 export AFL_NO_AFFINITY=1
 
 INPUT=/corpus

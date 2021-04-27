@@ -1,6 +1,6 @@
 #!/usr/bin/node
 
-const HOURS = 4;
+const HOURS = 8;
 
 const {CORES,OUTPUT,WHATSUP} = process.env;
 if(!CORES || !OUTPUT || !WHATSUP) {

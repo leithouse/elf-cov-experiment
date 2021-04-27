@@ -1,6 +1,6 @@
 #!/bin/bash
 RUN_DIR="$( cd "$(dirname "$0")" && pwd )"
-export FUZZER=learnafl
+export FUZZER=aflfast
 export TSTAMP=$(date +%s)
 if [[ -z "$CORPUS_REPO" ]]; then
   echo Must supply CORPUS_REPO env variable
@@ -14,6 +14,6 @@ fi
 INPUT=$CORPUS_REPO/$CORPUS
 export OUTPUT=/work/output/$FUZZER/$CORPUS-$TSTAMP
 
-docker run --rm -w /work -it -v "$RUN_DIR/..":/work -v "$INPUT":/corpus my/learnafl sh -c "OUTPUT=$OUTPUT /work/script/campaign-learnafl.sh"
+docker run --rm -w /work -it -v "$RUN_DIR/..":/work -v "$INPUT":/corpus my/aflfast sh -c "OUTPUT=$OUTPUT /work/script/campaign-aflfast.sh"
 
 $RUN_DIR/run-collect.sh
