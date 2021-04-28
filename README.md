@@ -50,20 +50,11 @@ The AFL container also adds gdb, exploitable, afl-utils, afl-collect, and compil
 ```
 # May need sudo depending on docker permissions
 
-export CORPUS_REPO=/path/to/corpi_repo
-[sudo] CORPUS=standard    script/run-mopt.sh
-[sudo] CORPUS=brute-force script/run-mopt.sh
-[sudo] CORPUS=engineered  script/run-mopt.sh
-[sudo] CORPUS=standard    script/run-afl.sh
-[sudo] CORPUS=brute-force script/run-afl.sh
-[sudo] CORPUS=engineered  script/run-afl.sh
-[sudo] CORPUS=standard    script/run-qsym.sh
-[sudo] CORPUS=brute-force script/run-qsym.sh
-[sudo] CORPUS=engineered  script/run-qsym.sh
-[sudo] CORPUS=standard    script/run-aflfast.sh
-[sudo] CORPUS=brute-force script/run-aflfast.sh
-[sudo] CORPUS=engineered  script/run-aflfast.sh
-[sudo] CORPUS=standard    script/run-learnafl.sh
-[sudo] CORPUS=brute-force script/run-learnafl.sh
-[sudo] CORPUS=engineered  script/run-learnafl.sh
+declare -a fuzzers=('afl','mopt','qsym','learnafl','aflfast')
+declare -a corpi=('standard','brute-force','engineered')
+for FUZZER in ${fuzzers[@]}; do
+  for CORPUS in ${corpi[@]}; do
+    [sudo] CORPUS_REPO=/path/to/corpi_repo CORPUS=$CORPUS script/run-$FUZZER.sh
+  done
+done
 ```
